@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widget/change_language_button_widget.dart';
-import '../widget/change_theme_button_widget.dart';
+import '../widgets/change_language_button_widget.dart';
+import '../widgets/change_theme_button_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
