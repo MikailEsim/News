@@ -20,9 +20,62 @@ class GeneralProvider extends ChangeNotifier {
 
 class MyThemes {
   static final darkTheme = ThemeData(
-      scaffoldBackgroundColor: Colors.grey.shade900,
-      colorScheme: const ColorScheme.dark());
+    scaffoldBackgroundColor: const Color(0xff010203),
+    colorScheme: const ColorScheme.dark(),
+    textTheme: const TextTheme(
+      headline6: TextStyle(fontSize: 20, color: Color(0xfff5f5f5)),
+      bodyText1: TextStyle(fontSize: 15, color: Color(0xfff5f5f5)),
+      bodyText2: TextStyle(fontSize: 15, color: Colors.blue),
+      subtitle1: TextStyle(
+          fontSize: 15, color: Color(0xfff5f5f5), fontWeight: FontWeight.bold),
+    ),
+    appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xff010203),
+        titleTextStyle: TextStyle(
+          fontSize: 20.0,
+          color: Color(0xfff5f5f5),
+        ),
+        elevation: 0,
+        shape:
+            Border(bottom: BorderSide(color: Color(0xff777777), width: 0.9))),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      backgroundColor: Color(0xff010203),
+      selectedIconTheme: IconThemeData(
+        color: Color(0xfff5f5f5),
+      ),
+      unselectedIconTheme: IconThemeData(color: Color(0xfff5f5f5)),
+    ),
+  );
+
   static final lightTheme = ThemeData(
-      scaffoldBackgroundColor: Colors.white,
-      colorScheme: const ColorScheme.light());
+    scaffoldBackgroundColor: const Color(0xfff5f5f5),
+    colorScheme: const ColorScheme.light(),
+    textTheme: const TextTheme(
+      headline6: TextStyle(fontSize: 20, color: Color(0xff010203)),
+      bodyText1: TextStyle(fontSize: 15, color: Color(0xff010203)),
+      bodyText2: TextStyle(fontSize: 15, color: Colors.blue),
+      subtitle1: TextStyle(
+          fontSize: 15, color: Color(0xff010203), fontWeight: FontWeight.bold),
+    ),
+    appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xfff5f5f5),
+        titleTextStyle: TextStyle(
+          fontSize: 20.0,
+          color: Color(0xff010203),
+        ),
+        elevation: 0,
+        shape:
+            Border(bottom: BorderSide(color: Color(0xff777777), width: 0.9))),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      backgroundColor: Color(0xfff5f5f5),
+      selectedIconTheme: IconThemeData(
+        color: Color(0xff010203),
+      ),
+      unselectedIconTheme: IconThemeData(color: Color(0xff010203)),
+    ),
+  );
 }

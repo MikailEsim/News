@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'package:projects/provider/general_provider.dart';
 import 'package:projects/screens/exchangeRateScreen.dart';
 import 'package:projects/screens/homeScreen.dart';
 import 'package:projects/screens/prayerTimesScreen.dart';
 import 'package:projects/screens/settingsScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,12 +24,23 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  void configLoading(isDarkMode) {
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+      ..loadingStyle =
+          isDarkMode ? EasyLoadingStyle.light : EasyLoadingStyle.dark
+      ..indicatorSize = 50.0
+      ..radius = 10.0;
+  }
+
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (context) => GeneralProvider(),
         builder: (context, _) {
           final themeProvider = Provider.of<GeneralProvider>(context);
+          configLoading(themeProvider.isDarkMode);
           return MaterialApp(
+            builder: EasyLoading.init(),
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
@@ -51,9 +62,13 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget currentScreen = const HomeScreen();
-  Color navigationColor = Colors.red;
   String navigationText = 'homePage';
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -62,25 +77,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     if (index == 0) {
       setState(() {
         currentScreen = const HomeScreen();
-        navigationColor = Colors.red;
         navigationText = 'homePage';
       });
     } else if (index == 1) {
       setState(() {
         currentScreen = const ExchangeRateScreen();
-        navigationColor = Colors.purple;
         navigationText = 'exchangeRates';
       });
     } else if (index == 2) {
       setState(() {
         currentScreen = const PrayerTimesScreen();
-        navigationColor = Colors.green;
         navigationText = 'prayerTimes';
       });
     } else if (index == 3) {
       setState(() {
         currentScreen = const SettingsScreen();
-        navigationColor = Colors.green;
         navigationText = 'settings';
       });
     }
@@ -90,33 +101,32 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(navigationText).tr(),
-        backgroundColor: navigationColor,
+        title: Text(
+          navigationText,
+          style: Theme.of(context).textTheme.headline6,
+        ).tr(),
+        centerTitle: true,
       ),
       body: Center(
         child: currentScreen,
       ),
-      bottomNavigationBar: MoltenBottomNavigationBar(
-        selectedIndex: _selectedIndex,
-        domeHeight: 15.0,
-        domeCircleColor: navigationColor,
-        barColor: Colors.white,
-        curve: Curves.linear,
-        tabs: [
-          MoltenTab(
-            icon: const Icon(Icons.home, size: 30),
-          ),
-          MoltenTab(
-            icon: const Icon(Icons.currency_exchange, size: 30),
-          ),
-          MoltenTab(
-            icon: const Icon(Icons.access_time, size: 30),
-          ),
-          MoltenTab(
-            icon: const Icon(Icons.settings, size: 30),
-          ),
-        ],
-        onTabChange: _onItemTapped,
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+            border:
+                Border(top: BorderSide(color: Color(0xff777777), width: 0.25))),
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.currency_exchange), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.access_time), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
+          ],
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
