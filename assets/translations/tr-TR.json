@@ -1,7 +1,13 @@
 {
+  "economy": "Ekonomi",
   "exchangeRates": "Kurlar",
+  "general": "Haberler",
   "homePage": "Ana Sayfa",
   "loading": "Yükleniyor...",
+  "magazine": "Magazin",
+  "newsDetail": "Haber Detayı",
   "prayerTimes": "Namaz Vakitleri",
-  "settings": "Ayarlar"
+  "settings": "Ayarlar",
+  "sport": "Spor",
+  "world": "Dünya"
 }

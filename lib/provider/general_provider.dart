@@ -27,6 +27,10 @@ class MyThemes {
       bodyText1: TextStyle(fontSize: 15, color: Color(0xfff5f5f5)),
       bodyText2: TextStyle(fontSize: 15, color: Colors.blue),
       subtitle1: TextStyle(
+          fontSize: 17.5,
+          color: Color(0xfff5f5f5),
+          fontWeight: FontWeight.bold),
+      subtitle2: TextStyle(
           fontSize: 15, color: Color(0xfff5f5f5), fontWeight: FontWeight.bold),
     ),
     appBarTheme: const AppBarTheme(
@@ -43,7 +47,7 @@ class MyThemes {
       elevation: 0,
       backgroundColor: Color(0xff010203),
       selectedIconTheme: IconThemeData(
-        color: Color(0xfff5f5f5),
+        color: Colors.lightBlue,
       ),
       unselectedIconTheme: IconThemeData(color: Color(0xfff5f5f5)),
     ),
@@ -57,6 +61,10 @@ class MyThemes {
       bodyText1: TextStyle(fontSize: 15, color: Color(0xff010203)),
       bodyText2: TextStyle(fontSize: 15, color: Colors.blue),
       subtitle1: TextStyle(
+          fontSize: 17.5,
+          color: Color(0xff010203),
+          fontWeight: FontWeight.bold),
+      subtitle2: TextStyle(
           fontSize: 15, color: Color(0xff010203), fontWeight: FontWeight.bold),
     ),
     appBarTheme: const AppBarTheme(
@@ -73,7 +81,7 @@ class MyThemes {
       elevation: 0,
       backgroundColor: Color(0xfff5f5f5),
       selectedIconTheme: IconThemeData(
-        color: Color(0xff010203),
+        color: Colors.lightBlue,
       ),
       unselectedIconTheme: IconThemeData(color: Color(0xff010203)),
     ),

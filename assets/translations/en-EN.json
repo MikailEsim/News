@@ -1,7 +1,13 @@
 {
+  "economy": "Economy",
   "exchangeRates": "Exchange Rates",
+  "general": "News",
   "homePage": "Home Page",
   "loading": "Loading...",
+  "magazine": "Magazine",
+  "newsDetail": "News Detail",
   "prayerTimes": "Prayer Times",
-  "settings": "Settings"
+  "settings": "Settings",
+  "sport": "Sport",
+  "world": "World"
 }

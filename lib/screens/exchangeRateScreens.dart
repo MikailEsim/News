@@ -3,16 +3,16 @@ import '../screenUtil.dart';
 import '../widgets/appbar.dart';
 import '../widgets/bottomNavigationBar.dart';
 
-class PrayerTimesScreen extends StatelessWidget {
-  const PrayerTimesScreen({super.key});
+class ExchangeRatesScreen extends StatelessWidget {
+  const ExchangeRatesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
             Size.fromHeight(ScreenUtil.elementHeight(context, 60)),
-            'prayerTimes'),
-        bottomNavigationBar: const CustomBottomNavigationBar(2),
-        body: Text('Prayer Times Screen'));
+            'exchangeRates'),
+        bottomNavigationBar: const CustomBottomNavigationBar(1),
+        body: Text('Exchange Rate Screen'));
   }
 }
