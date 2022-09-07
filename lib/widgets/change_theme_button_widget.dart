@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../provider/general_provider.dart';
 
-class ChangeThemeButtonWidget extends StatelessWidget {
+class ChangeThemeButtonWidget extends StatefulWidget {
   const ChangeThemeButtonWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<GeneralProvider>(context);
+  State<ChangeThemeButtonWidget> createState() =>
+      _ChangeThemeButtonWidgetState();
+}
 
+class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
+  dynamic isDarkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getIsDarkMode();
+  }
+
+  getIsDarkMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isDarkMode = prefs.getBool("isDarkMode");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Switch.adaptive(
-        value: themeProvider.isDarkMode,
+        value: isDarkMode,
         onChanged: (value) {
           final provider = Provider.of<GeneralProvider>(context, listen: false);
-          provider.toggleTheme(value);
+          provider.toggleTheme(false);
+          getIsDarkMode();
         });
   }
 }

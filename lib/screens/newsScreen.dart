@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projects/screens/newsDetailScreen.dart';
 import 'package:projects/widgets/appbar.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../models/NewsModel/news.dart';
+import '../models/newsModel.dart';
 import '../screenUtil.dart';
 import '../utils/getSourceImage.dart';
 import '../widgets/bottomNavigationBar.dart';
@@ -192,7 +192,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                                   builder: (context) =>
                                                       NewsDetailScreen(news))),
                                         },
-                                    child: Icon(Icons.info_outline))
+                                    child: const Icon(Icons.info_outline))
                               ]),
                         ),
                       ],

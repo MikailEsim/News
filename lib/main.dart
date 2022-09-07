@@ -7,6 +7,7 @@ import 'package:projects/screens/prayerTimesScreen.dart';
 import 'package:projects/screens/settingsScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final navigatorKey = GlobalKey<NavigatorState>();
   MyApp({super.key});
 
   void configLoading(isDarkMode) {
@@ -34,14 +34,21 @@ class MyApp extends StatelessWidget {
       ..radius = 10.0;
   }
 
+  getIsDarkMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    dynamic isDarkMode = prefs.getBool("isDarkMode");
+    configLoading(isDarkMode);
+    return isDarkMode;
+  }
+
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (context) => GeneralProvider(),
         builder: (context, _) {
           final themeProvider = Provider.of<GeneralProvider>(context);
-          configLoading(themeProvider.isDarkMode);
+          themeProvider.toggleTheme(true);
+          getIsDarkMode();
           return MaterialApp(
-            navigatorKey: navigatorKey,
             builder: EasyLoading.init(),
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,

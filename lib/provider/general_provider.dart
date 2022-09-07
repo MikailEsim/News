@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GeneralProvider extends ChangeNotifier {
   Locale _locale = const Locale('tr', 'TR');
@@ -10,10 +11,19 @@ class GeneralProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  ThemeMode themeMode = ThemeMode.dark;
-  bool get isDarkMode => themeMode == ThemeMode.dark;
-  void toggleTheme(bool isOn) {
-    themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+  ThemeMode themeMode = ThemeMode.light;
+  void toggleTheme(bool isRunApp) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (isRunApp) {
+      themeMode = prefs.getBool("isDarkMode") == true
+          ? ThemeMode.dark
+          : ThemeMode.light;
+    } else {
+      themeMode = prefs.getBool("isDarkMode") == true
+          ? ThemeMode.light
+          : ThemeMode.dark;
+    }
+    prefs.setBool("isDarkMode", themeMode == ThemeMode.dark);
     notifyListeners();
   }
 }
