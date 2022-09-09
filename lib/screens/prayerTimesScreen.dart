@@ -155,7 +155,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
             'prayerTimes'),
         bottomNavigationBar: const CustomBottomNavigationBar(2),
         body: Container(
-          padding: const EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Row(
             children: [
               Expanded(

@@ -19,10 +19,12 @@ class _NewsScreenState extends State<NewsScreen> {
   dynamic generalNewsList = [];
   dynamic categories = [
     {"key": 0, "name": 'general'},
-    {"key": 1, "name": 'world'},
-    {"key": 2, "name": 'economy'},
-    {"key": 3, "name": 'sport'},
-    {"key": 4, "name": 'magazine'},
+    {"key": 1, "name": 'business'},
+    {"key": 2, "name": 'sports'},
+    {"key": 3, "name": 'science'},
+    {"key": 4, "name": 'technology'},
+    {"key": 5, "name": 'health'},
+    {"key": 6, "name": 'entertainment'},
   ];
 
   @override
@@ -31,8 +33,8 @@ class _NewsScreenState extends State<NewsScreen> {
     getGeneralNewsFunc('general');
   }
 
-  Future<void> getGeneralNewsFunc(type) async {
-    var response = await getNews(type, '0');
+  Future<void> getGeneralNewsFunc(category) async {
+    var response = await getNews(category);
     setState(() {
       generalNewsList = response;
     });
@@ -40,7 +42,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
   getCategories(context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -85,7 +87,9 @@ class _NewsScreenState extends State<NewsScreen> {
                 child: Column(
                   children: [
                     Row(
-                      children: [getSourceImage(news['source'], 50.0, 50.0)],
+                      children: [
+                        getSourceImage(news['source']['name'], 50.0, 50.0)
+                      ],
                     ),
                   ],
                 ),
@@ -98,7 +102,7 @@ class _NewsScreenState extends State<NewsScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            news['source'],
+                            '${news['source']['name']} · ${DateFormat('dd.MM.yyyy HH:mm').format(DateTime.parse(news['publishedAt']))}',
                             textAlign: TextAlign.left,
                             style: Theme.of(context).textTheme.subtitle2,
                           ),
@@ -109,7 +113,7 @@ class _NewsScreenState extends State<NewsScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            news['name'],
+                            news['title'],
                             textAlign: TextAlign.left,
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
@@ -122,9 +126,9 @@ class _NewsScreenState extends State<NewsScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () async =>
-                                {await launchUrl(Uri.parse(news["url"]))},
+                                {await launchUrl(Uri.parse(news['url']))},
                             child: Text(
-                              news["url"],
+                              news['url'],
                               textAlign: TextAlign.left,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodyText2,
@@ -134,17 +138,17 @@ class _NewsScreenState extends State<NewsScreen> {
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    news["image"]?.length > 0
+                    news['urlToImage'] != null
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: SizedBox(
-                                  width: 315,
+                                  width: 310,
                                   height: 200,
                                   child: Image.network(
-                                    news["image"],
+                                    news['urlToImage'],
                                     fit: BoxFit.fill,
                                     errorBuilder: (BuildContext context,
                                         Object exception,
@@ -174,7 +178,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 GestureDetector(
                                     onTap: () async => {
                                           await launchUrl(
-                                              Uri.parse(news["url"]))
+                                              Uri.parse(news['url']))
                                         },
                                     child: const Icon(Icons.link))
                               ]),
@@ -214,7 +218,7 @@ class _NewsScreenState extends State<NewsScreen> {
           Size.fromHeight(ScreenUtil.elementHeight(context, 60)), 'homePage'),
       bottomNavigationBar: const CustomBottomNavigationBar(0),
       body: Container(
-        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+        padding: const EdgeInsets.all(10.0),
         child: Row(children: [
           Expanded(
             child: Column(

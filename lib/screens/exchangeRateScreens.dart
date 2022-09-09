@@ -174,7 +174,7 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
                 child: Container(
                   color: Colors.grey,
                   padding:
-                      const EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
+                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -233,7 +233,7 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
                 flex: 45,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 5.0, right: 5.0, top: 10.0, bottom: 10.0),
+                      left: 9.0, right: 9.0, top: 10.0, bottom: 10.0),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Row(

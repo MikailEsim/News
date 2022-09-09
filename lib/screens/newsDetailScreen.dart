@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/utils/getSourceImage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,7 +23,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
             'newsDetail'),
         bottomNavigationBar: const CustomBottomNavigationBar(0),
         body: Container(
-          padding: const EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Row(
             children: [
               Expanded(
@@ -33,7 +34,8 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                         Expanded(
                           flex: 2,
                           child: Column(children: [
-                            getSourceImage(widget.news['source'], 60.0, 60.0)
+                            getSourceImage(
+                                widget.news['source']['name'], 60.0, 60.0)
                           ]),
                         ),
                         const SizedBox(
@@ -43,36 +45,48 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                           flex: 10,
                           child: Column(
                             children: [
+                              const SizedBox(height: 7.5),
                               Row(
                                 children: [
                                   Text(
-                                    widget.news['source'],
+                                    widget.news['source']['name'],
                                     textAlign: TextAlign.left,
                                     style:
                                         Theme.of(context).textTheme.subtitle2,
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10.0),
+                              const SizedBox(height: 5.0),
                               Row(
                                 children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text(widget.news['name'],
-                                            textAlign: TextAlign.left,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1),
-                                      ],
-                                    ),
+                                  Text(
+                                    DateFormat('dd.MM.yyyy HH:mm').format(
+                                        DateTime.parse(
+                                            widget.news['publishedAt'])),
+                                    textAlign: TextAlign.left,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle2,
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         )
                       ]),
+                    ),
+                    const SizedBox(height: 15.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(widget.news['title'],
+                                  textAlign: TextAlign.left,
+                                  style: Theme.of(context).textTheme.bodyText1),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 15.0),
                     Row(children: [
@@ -105,7 +119,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     const SizedBox(height: 15.0),
                     Row(
                       children: [
-                        widget.news["image"]?.length > 0
+                        widget.news['urlToImage'] != null
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -114,10 +128,10 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10.0),
                                       child: SizedBox(
-                                        width: 380,
+                                        width: 372.5,
                                         height: 200,
                                         child: Image.network(
-                                          widget.news["image"],
+                                          widget.news['urlToImage'],
                                           fit: BoxFit.fill,
                                           errorBuilder: (BuildContext context,
                                               Object exception,
@@ -150,7 +164,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                                 GestureDetector(
                                     onTap: () async => {
                                           await launchUrl(
-                                              Uri.parse(widget.news["url"]))
+                                              Uri.parse(widget.news['url']))
                                         },
                                     child: const Icon(Icons.link))
                               ]),

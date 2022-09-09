@@ -46,14 +46,15 @@ class MyThemes {
           fontSize: 15, color: Color(0xfff5f5f5), fontWeight: FontWeight.bold),
     ),
     appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xff010203),
-        titleTextStyle: TextStyle(
-          fontSize: 20.0,
-          color: Color(0xfff5f5f5),
-        ),
-        elevation: 0,
-        shape:
-            Border(bottom: BorderSide(color: Color(0xff777777), width: 0.9))),
+      backgroundColor: Color(0xff010203),
+      titleTextStyle: TextStyle(
+        fontSize: 20.0,
+        color: Color(0xfff5f5f5),
+      ),
+      elevation: 0,
+      shape: Border(bottom: BorderSide(color: Color(0xff777777), width: 0.9)),
+      iconTheme: IconThemeData(color: Color(0xfff5f5f5)),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       elevation: 0,
@@ -80,14 +81,15 @@ class MyThemes {
           fontSize: 15, color: Color(0xff010203), fontWeight: FontWeight.bold),
     ),
     appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xfff5f5f5),
-        titleTextStyle: TextStyle(
-          fontSize: 20.0,
-          color: Color(0xff010203),
-        ),
-        elevation: 0,
-        shape:
-            Border(bottom: BorderSide(color: Color(0xff777777), width: 0.9))),
+      backgroundColor: Color(0xfff5f5f5),
+      titleTextStyle: TextStyle(
+        fontSize: 20.0,
+        color: Color(0xff010203),
+      ),
+      elevation: 0,
+      shape: Border(bottom: BorderSide(color: Color(0xff777777), width: 0.9)),
+      iconTheme: IconThemeData(color: Color(0xff010203)),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       elevation: 0,

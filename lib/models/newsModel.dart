@@ -4,17 +4,16 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import '../utils/constant.dart';
 
-dynamic getNews(String tag, String padding) async {
-  final headers = {"authorization": apiKey, "content-type": "application/json"};
-  final url = '$newsApiUrl$tag&padding=$padding';
+dynamic getNews(String category) async {
+  final url = '$newsApiUrl$category';
 
   EasyLoading.show(status: 'loading'.tr());
-  var response = await http.get(Uri.parse(url), headers: headers);
+  var response = await http.get(Uri.parse(url));
   EasyLoading.dismiss();
   if (response.statusCode == 200) {
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
-    return jsonResponse["result"];
+    return jsonResponse["articles"];
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
