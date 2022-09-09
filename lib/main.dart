@@ -63,7 +63,6 @@ class MyApp extends StatelessWidget {
               '/prayerTimes': (context) => const PrayerTimesScreen(),
               '/settings': (context) => const SettingsScreen(),
             },
-            //home: const NewsScreen(),
           );
         },
       );

@@ -4,9 +4,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import '../utils/constant.dart';
 
-dynamic getNews(String tag, String padding) async {
+dynamic getPrayerTimes(city) async {
   final headers = {"authorization": apiKey, "content-type": "application/json"};
-  final url = '$newsApiUrl$tag&padding=$padding';
+  final url = '$prayerTimesUrl$city';
 
   EasyLoading.show(status: 'loading'.tr());
   var response = await http.get(Uri.parse(url), headers: headers);

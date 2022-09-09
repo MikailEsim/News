@@ -8,6 +8,8 @@ class GeneralProvider extends ChangeNotifier {
   void setLocale(Locale locale, BuildContext context) async {
     context.setLocale(locale);
     _locale = locale;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("langIsTr", locale.toString() == 'tr_TR');
     notifyListeners();
   }
 
