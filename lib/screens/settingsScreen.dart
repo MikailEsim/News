@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../screenUtil.dart';
 import '../widgets/appbar.dart';
@@ -17,18 +18,63 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          Size.fromHeight(ScreenUtil.elementHeight(context, 60)),
-          'exchangeRates'),
+          Size.fromHeight(ScreenUtil.elementHeight(context, 60)), 'settings'),
       bottomNavigationBar: const CustomBottomNavigationBar(3),
-      body: Column(
-        children: [
-          Row(
-            children: const [
-              ChangeLanguageButtonWidget(),
-              ChangeThemeButtonWidget(),
-            ],
-          )
-        ],
+      body: Container(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("changeLanguge",
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1)
+                                .tr()
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [ChangeLanguageButtonWidget()],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('changeTheme',
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1)
+                                .tr()
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [ChangeThemeButtonWidget()],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

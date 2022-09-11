@@ -172,7 +172,7 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
               Expanded(
                 flex: 3,
                 child: Container(
-                  color: Colors.grey,
+                  color: Colors.blue,
                   padding:
                       const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                   child: Row(
@@ -182,9 +182,11 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("type",
-                                    style:
-                                        Theme.of(context).textTheme.subtitle2)
+                            const Text("type",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold))
                                 .tr()
                           ],
                         ),
@@ -254,19 +256,23 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
               Expanded(
                 flex: 3,
                 child: Container(
-                  color: Colors.grey,
+                  color: Colors.blue,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('lastUpdate',
-                              style: Theme.of(context).textTheme.bodyText1)
+                      const Text('lastUpdate',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold))
                           .tr(),
                       Text(
                         exchangeRatesUpdateDate != null
                             ? getLastUpdateDate(context,
                                 DateTime.parse(exchangeRatesUpdateDate['date']))
                             : '',
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style:
+                            const TextStyle(fontSize: 15, color: Colors.white),
                       )
                     ],
                   ),

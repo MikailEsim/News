@@ -60,7 +60,7 @@ class MyThemes {
       elevation: 0,
       backgroundColor: Color(0xff010203),
       selectedIconTheme: IconThemeData(
-        color: Colors.lightBlue,
+        color: Colors.blue,
       ),
       unselectedIconTheme: IconThemeData(color: Color(0xfff5f5f5)),
     ),
@@ -95,7 +95,7 @@ class MyThemes {
       elevation: 0,
       backgroundColor: Color(0xfff5f5f5),
       selectedIconTheme: IconThemeData(
-        color: Colors.lightBlue,
+        color: Colors.blue,
       ),
       unselectedIconTheme: IconThemeData(color: Color(0xff010203)),
     ),

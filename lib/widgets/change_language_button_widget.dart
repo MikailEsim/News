@@ -32,18 +32,53 @@ class _ChangeLanguageButtonWidgetState
   @override
   Widget build(BuildContext context) {
     final localeProvider = Provider.of<GeneralProvider>(context, listen: true);
-    return IconButton(
-      icon: langIsTr
-          ? Flag.fromCode(FlagsCode.GB, height: 40, width: 40)
-          : Flag.fromCode(FlagsCode.TR, height: 40, width: 40),
-      onPressed: () {
-        if (localeProvider.locale.toString() == 'tr_TR') {
-          localeProvider.setLocale(const Locale('en', 'EN'), context);
-        } else {
-          localeProvider.setLocale(const Locale('tr', 'TR'), context);
-        }
-        getLang();
-      },
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              IconButton(
+                icon: Flag.fromCode(FlagsCode.TR),
+                onPressed: () {
+                  localeProvider.setLocale(const Locale('tr', 'TR'), context);
+                  getLang();
+                },
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              Switch.adaptive(
+                  value: !langIsTr,
+                  onChanged: (value) {
+                    if (value) {
+                      localeProvider.setLocale(
+                          const Locale('en', 'EN'), context);
+                    } else {
+                      localeProvider.setLocale(
+                          const Locale('tr', 'TR'), context);
+                    }
+                    getLang();
+                  }),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              IconButton(
+                icon: Flag.fromCode(FlagsCode.GB),
+                onPressed: () {
+                  localeProvider.setLocale(const Locale('en', 'EN'), context);
+                  getLang();
+                },
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

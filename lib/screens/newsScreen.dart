@@ -1,9 +1,15 @@
+import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:projects/screens/newsDetailScreen.dart';
 import 'package:projects/widgets/appbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/newsModel.dart';
+import '../models/weatherModel.dart';
 import '../screenUtil.dart';
 import '../utils/getSourceImage.dart';
 import '../widgets/bottomNavigationBar.dart';
@@ -16,7 +22,10 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  dynamic generalNewsList = [];
+  List citiesList = [];
+  dynamic currentCityId;
+  dynamic weatherList;
+  String currentCity = 'Ankara';
   dynamic categories = [
     {"key": 0, "name": 'general'},
     {"key": 1, "name": 'business'},
@@ -26,14 +35,70 @@ class _NewsScreenState extends State<NewsScreen> {
     {"key": 5, "name": 'health'},
     {"key": 6, "name": 'entertainment'},
   ];
+  dynamic selectedCategory = 'general';
+  dynamic generalNewsList = [];
 
   @override
   void initState() {
     super.initState();
-    getGeneralNewsFunc('general');
+    getCitiesFunc();
+    getCurrentLocation();
+    getNewsFunc('general');
   }
 
-  Future<void> getGeneralNewsFunc(category) async {
+  Future<dynamic> getCitiesFunc() async {
+    dynamic response = await rootBundle
+        .loadString('assets/citiesOfTurkey/citiesOfTurkey.json');
+    dynamic data = json.decode(response);
+    setState(() {
+      citiesList = data;
+    });
+  }
+
+  Future<void> getCurrentLocation() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final locale = prefs.getBool("langIsTr") == true ? 'tr' : 'en';
+    var checkPermission = await Geolocator.checkPermission();
+    if (checkPermission == LocationPermission.whileInUse ||
+        checkPermission == LocationPermission.always) {
+      EasyLoading.show(status: 'loading'.tr());
+      var position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      citiesList.forEach((city) => {
+            if ((((double.parse(city['latitude'].toString()) -
+                            double.parse(position.latitude.toString()))
+                        .abs()) <
+                    0.5) &&
+                (((double.parse(city['longitude'].toString()) -
+                            double.parse(position.longitude.toString()))
+                        .abs()) <
+                    0.5))
+              {
+                setState(() {
+                  currentCityId = 6;
+                  currentCity = city['name'];
+                }),
+                getWeatherFunc(city, locale),
+                EasyLoading.dismiss(),
+              },
+          });
+    } else {
+      setState(() {
+        currentCityId = 6;
+        currentCity = 'Ankara';
+      });
+      getWeatherFunc(currentCity, locale);
+    }
+  }
+
+  Future<void> getWeatherFunc(city, lang) async {
+    var response = await getWeather(city.toString().toLowerCase(), lang);
+    setState(() {
+      weatherList = response;
+    });
+  }
+
+  Future<void> getNewsFunc(category) async {
     var response = await getNews(category);
     setState(() {
       generalNewsList = response;
@@ -42,26 +107,162 @@ class _NewsScreenState extends State<NewsScreen> {
 
   getCategories(context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
+      padding: const EdgeInsets.only(bottom: 5.0),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            ...categories.map((category) => GestureDetector(
-                  onTap: () async => await getGeneralNewsFunc(category['name']),
-                  child: Container(
-                      margin: const EdgeInsets.only(right: 10.0),
-                      padding: const EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color(0xff777777), width: 2.0),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        category['name'],
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ).tr()),
-                ))
+            ...categories.map(
+              (category) => GestureDetector(
+                onTap: () async => {
+                  setState(() {
+                    selectedCategory = category['name'];
+                  }),
+                  await getNewsFunc(category['name']),
+                },
+                child: Container(
+                    margin: const EdgeInsets.only(right: 10.0),
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: selectedCategory == category['name']
+                          ? Colors.blue
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      category['name'],
+                      style: selectedCategory == category['name']
+                          ? const TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.5,
+                              fontWeight: FontWeight.bold)
+                          : Theme.of(context).textTheme.subtitle1,
+                    ).tr()),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  getCurrentDayWeather(context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Column(
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      print('show all week weather');
+                    },
+                    child: Icon(Icons.clear_all))
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(currentCity, style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(weatherList[0]['date'] + ' ' + weatherList[0]['day'],
+                    style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Image.network(
+                  weatherList[0]['icon'],
+                  width: 25.0,
+                  height: 25.0,
+                )
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(weatherList[0]['description'],
+                    style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(weatherList[0]['degree'],
+                    style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(weatherList[0]['min'],
+                    style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(weatherList[0]['max'],
+                    style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(weatherList[0]['night'],
+                    style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
+            const SizedBox(width: 5.0),
+            Column(children: [
+              Text('·', style: Theme.of(context).textTheme.headline6)
+            ]),
+            const SizedBox(width: 5.0),
+            Column(
+              children: [
+                Text(weatherList[0]['humidity'],
+                    style: Theme.of(context).textTheme.bodyText1)
+              ],
+            ),
           ],
         ),
       ),
@@ -147,14 +348,21 @@ class _NewsScreenState extends State<NewsScreen> {
                                 child: SizedBox(
                                   width: 310,
                                   height: 200,
-                                  child: Image.network(
-                                    news['urlToImage'],
-                                    fit: BoxFit.fill,
-                                    errorBuilder: (BuildContext context,
-                                        Object exception,
-                                        StackTrace? stackTrace) {
-                                      return const Text('');
-                                    },
+                                  child: InteractiveViewer(
+                                    boundaryMargin: const EdgeInsets.all(80),
+                                    panEnabled: false,
+                                    scaleEnabled: true,
+                                    minScale: 1.0,
+                                    maxScale: 2.2,
+                                    child: Image.network(
+                                      news['urlToImage'],
+                                      fit: BoxFit.fill,
+                                      errorBuilder: (BuildContext context,
+                                          Object exception,
+                                          StackTrace? stackTrace) {
+                                        return const Text('');
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -165,10 +373,45 @@ class _NewsScreenState extends State<NewsScreen> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 4,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [Icon(Icons.newspaper)]),
+                          flex: 12,
+                          child: Column(children: [
+                            GestureDetector(
+                              onTap: () async => {
+                                await launchUrl(Uri.parse(
+                                    'https://www.${news['source']['name'].toString().toLowerCase()}'))
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      children: const [
+                                        Icon(Icons.newspaper),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5.0),
+                                  Expanded(
+                                    flex: 10,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          news['author'] ?? '',
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.start,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ]),
                         ),
                         Expanded(
                           flex: 4,
@@ -228,6 +471,19 @@ class _NewsScreenState extends State<NewsScreen> {
                     Expanded(
                       child: Column(
                         children: [getCategories(context)],
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          weatherList != null
+                              ? getCurrentDayWeather(context)
+                              : const Text('')
+                        ],
                       ),
                     )
                   ],

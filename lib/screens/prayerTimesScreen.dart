@@ -3,6 +3,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:projects/models/prayerTimesModel.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +21,8 @@ class PrayerTimesScreen extends StatefulWidget {
 
 class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
   List citiesList = [];
-  dynamic selectedValueId;
-  dynamic selectedValueName;
-  dynamic latitude;
-  dynamic longitude;
+  dynamic selectedValueId = 6;
+  dynamic selectedValueName = 'Ankara';
   dynamic prayerTimes = [];
   dynamic currentDate;
   dynamic currentTime;
@@ -49,19 +48,16 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
     var checkPermission = await Geolocator.checkPermission();
     if (checkPermission == LocationPermission.whileInUse ||
         checkPermission == LocationPermission.always) {
+      EasyLoading.show(status: 'loading'.tr());
       var position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      setState(() {
-        latitude = position.latitude;
-        longitude = position.longitude;
-      });
       citiesList.forEach((city) => {
             if ((((double.parse(city['latitude'].toString()) -
-                            double.parse(latitude.toString()))
+                            double.parse(position.latitude.toString()))
                         .abs()) <
                     0.5) &&
                 (((double.parse(city['longitude'].toString()) -
-                            double.parse(longitude.toString()))
+                            double.parse(position.longitude.toString()))
                         .abs()) <
                     0.5))
               {
@@ -69,12 +65,12 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                   selectedValueId = int.parse(city['id'].toString());
                   selectedValueName = city['name'].toString();
                 }),
-                getPrayerTimesFunc()
+                getPrayerTimesFunc(),
+                EasyLoading.dismiss(),
               },
           });
     } else {
-      await Geolocator.requestPermission();
-      getCurrentLocation();
+      getPrayerTimesFunc();
     }
   }
 
@@ -173,19 +169,18 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                     value: value['id'],
                                     child: Text(
                                       value['name'],
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1,
+                                      style: const TextStyle(
+                                          fontSize: 17.5,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   );
                                 }).toList(),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_drop_down,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1
-                                      ?.color,
+                                  color: Colors.white,
                                 ),
-                                value: selectedValueId ?? 1,
+                                value: selectedValueId,
                                 onChanged: (value) {
                                   citiesList.forEach((city) {
                                     if (city['id'].toString() ==
@@ -207,7 +202,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                     const EdgeInsets.only(left: 15, right: 15),
                                 buttonDecoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: Colors.grey,
+                                  color: Colors.blue,
                                 ),
                                 itemHeight: 40,
                                 itemPadding:
@@ -216,7 +211,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                 dropdownWidth: 250,
                                 dropdownDecoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: Colors.grey,
+                                  color: Colors.blue,
                                 ),
                               ),
                             )
@@ -232,7 +227,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                           currentDate != null
                               ? Text(currentDate,
                                   style: Theme.of(context).textTheme.headline6)
-                              : Text('')
+                              : const Text('')
                         ],
                       ),
                     ),

@@ -29,12 +29,37 @@ class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Switch.adaptive(
-        value: isDarkMode,
-        onChanged: (value) {
-          final provider = Provider.of<GeneralProvider>(context, listen: false);
-          provider.toggleTheme(false);
-          getIsDarkMode();
-        });
+    return Row(
+      children: [
+        Expanded(
+          child: Column(children: const [
+            Icon(
+              Icons.light_mode,
+            )
+          ]),
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              Switch.adaptive(
+                  value: isDarkMode,
+                  onChanged: (value) {
+                    final provider =
+                        Provider.of<GeneralProvider>(context, listen: false);
+                    provider.toggleTheme(false);
+                    getIsDarkMode();
+                  }),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(children: const [
+            Icon(
+              Icons.dark_mode,
+            )
+          ]),
+        ),
+      ],
+    );
   }
 }

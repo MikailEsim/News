@@ -151,13 +151,48 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 8,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [Icon(Icons.newspaper)]),
+                          flex: 16,
+                          child: Column(children: [
+                            GestureDetector(
+                              onTap: () async => {
+                                await launchUrl(Uri.parse(
+                                    'https://www.${widget.news['source']['name'].toString().toLowerCase()}'))
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      children: const [
+                                        Icon(Icons.newspaper),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5.0),
+                                  Expanded(
+                                    flex: 10,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.news['author'] ?? '',
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.start,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ]),
                         ),
                         Expanded(
-                          flex: 8,
+                          flex: 4,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
