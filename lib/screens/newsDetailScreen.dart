@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:projects/utils/getSourceImage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../screenUtil.dart';
-import '../widgets/appbar.dart';
-import '../widgets/bottomNavigationBar.dart';
+import '../widgets/appbar_widget.dart';
+import '../widgets/bottom_navigation_bar_widget.dart';
 
 class NewsDetailScreen extends StatefulWidget {
   final dynamic news;
@@ -18,10 +18,10 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+        appBar: AppBarWidget(
             Size.fromHeight(ScreenUtil.elementHeight(context, 60)),
             'newsDetail'),
-        bottomNavigationBar: const CustomBottomNavigationBar(0),
+        bottomNavigationBar: const BottomNavigationBarWidget(0),
         body: Container(
           padding: const EdgeInsets.all(10.0),
           child: Row(
@@ -107,10 +107,15 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                       Expanded(
                         child: Column(
                           children: [
-                            Text(
-                              widget.news['url'],
-                              textAlign: TextAlign.left,
-                              style: Theme.of(context).textTheme.bodyText2,
+                            GestureDetector(
+                              onTap: () async => {
+                                await launchUrl(Uri.parse(widget.news['url']))
+                              },
+                              child: Text(
+                                widget.news['url'],
+                                textAlign: TextAlign.left,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
                             ),
                           ],
                         ),

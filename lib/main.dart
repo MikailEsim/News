@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:projects/provider/general_provider.dart';
 import 'package:projects/screens/exchangeRateScreens.dart';
 import 'package:projects/screens/newsScreen.dart';
-import 'package:projects/screens/prayerTimesScreen.dart';
 import 'package:projects/screens/settingsScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -60,7 +59,6 @@ class MyApp extends StatelessWidget {
             routes: {
               '/news': (context) => const NewsScreen(),
               '/exchangeRates': (context) => const ExchangeRatesScreen(),
-              '/prayerTimes': (context) => const PrayerTimesScreen(),
               '/settings': (context) => const SettingsScreen(),
             },
           );

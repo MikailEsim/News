@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../models/exchangeRatesModel.dart';
 import '../provider/general_provider.dart';
 import '../screenUtil.dart';
-import '../widgets/appbar.dart';
-import '../widgets/bottomNavigationBar.dart';
+import '../widgets/appbar_widget.dart';
+import '../widgets/bottom_navigation_bar_widget.dart';
 
 class ExchangeRatesScreen extends StatefulWidget {
   const ExchangeRatesScreen({super.key});
@@ -161,10 +161,10 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: AppBarWidget(
           Size.fromHeight(ScreenUtil.elementHeight(context, 60)),
           'exchangeRates'),
-      bottomNavigationBar: const CustomBottomNavigationBar(1),
+      bottomNavigationBar: const BottomNavigationBarWidget(1),
       body: Row(children: [
         Expanded(
           child: Column(
@@ -196,9 +196,11 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text("change",
-                                    style:
-                                        Theme.of(context).textTheme.subtitle2)
+                            const Text("change",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold))
                                 .tr()
                           ],
                         ),
@@ -208,9 +210,11 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text("buying",
-                                    style:
-                                        Theme.of(context).textTheme.subtitle2)
+                            const Text("buying",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold))
                                 .tr()
                           ],
                         ),
@@ -220,9 +224,11 @@ class _ExchangeRatesScreenState extends State<ExchangeRatesScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text("selling",
-                                    style:
-                                        Theme.of(context).textTheme.subtitle2)
+                            const Text("selling",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold))
                                 .tr()
                           ],
                         ),

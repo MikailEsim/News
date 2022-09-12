@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../screenUtil.dart';
-import '../widgets/appbar.dart';
-import '../widgets/bottomNavigationBar.dart';
+import '../widgets/appbar_widget.dart';
+import '../widgets/bottom_navigation_bar_widget.dart';
 import '../widgets/change_language_button_widget.dart';
 import '../widgets/change_theme_button_widget.dart';
 
@@ -17,9 +17,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: AppBarWidget(
           Size.fromHeight(ScreenUtil.elementHeight(context, 60)), 'settings'),
-      bottomNavigationBar: const CustomBottomNavigationBar(3),
+      bottomNavigationBar: const BottomNavigationBarWidget(2),
       body: Container(
         padding: const EdgeInsets.all(10.0),
         child: Row(

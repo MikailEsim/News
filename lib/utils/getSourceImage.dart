@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 
 getSourceImage(source, height, width) {
   String sourceIcon = 'assets/newsSourceImages/default.png';
-  if (source == 'Airporthaber.com') {
+  if (source == 'Adanaseshaber.com') {
+    sourceIcon = 'assets/newsSourceImages/adanaseshaber.png';
+  } else if (source == 'Airporthaber.com') {
     sourceIcon = 'assets/newsSourceImages/airporthaber.jpg';
   } else if (source == 'Aksam.com.tr') {
     sourceIcon = 'assets/newsSourceImages/aksam.png';
   } else if (source == 'Aspor.com.tr') {
     sourceIcon = 'assets/newsSourceImages/aspor.png';
+  } else if (source == 'Aydinlik.com.tr') {
+    sourceIcon = 'assets/newsSourceImages/aydinlik.jpg';
   } else if (source == 'Birgun.net') {
     sourceIcon = 'assets/newsSourceImages/birgun.png';
+  } else if (source == 'Bloomberght.com') {
+    sourceIcon = 'assets/newsSourceImages/bloomberght.jpg';
   } else if (source == 'Chip.com.tr') {
     sourceIcon = 'assets/newsSourceImages/chip.png';
   } else if (source == 'Cnnturk.com') {
     sourceIcon = 'assets/newsSourceImages/cnnturk.png';
+  } else if (source == 'Coin-turk.com') {
+    sourceIcon = 'assets/newsSourceImages/cointurk.png';
   } else if (source == 'Cumhuriyet.com.tr') {
     sourceIcon = 'assets/newsSourceImages/cumhuriyet.png';
   } else if (source == 'Donanimhaber.com') {
@@ -26,6 +34,8 @@ getSourceImage(source, height, width) {
     sourceIcon = 'assets/newsSourceImages/ensonhaber.png';
   } else if (source == 'Eurohoops') {
     sourceIcon = 'assets/newsSourceImages/eurohoops.jpg';
+  } else if (source == 'Evrimagaci.org') {
+    sourceIcon = 'assets/newsSourceImages/evrimagaci.png';
   } else if (source == 'F5haber.com') {
     sourceIcon = 'assets/newsSourceImages/f5.png';
   } else if (source == 'Fanatik.com.tr') {
@@ -40,8 +50,12 @@ getSourceImage(source, height, width) {
     sourceIcon = 'assets/newsSourceImages/haber7.jpg';
   } else if (source == 'Haber24.com') {
     sourceIcon = 'assets/newsSourceImages/haber24.png';
+  } else if (source == 'Haberiyakala.com') {
+    sourceIcon = 'assets/newsSourceImages/haberiyakala.jpg';
   } else if (source == 'Haberkolik.net') {
     sourceIcon = 'assets/newsSourceImages/haberkolik.png';
+  } else if (source == 'Haberler.com') {
+    sourceIcon = 'assets/newsSourceImages/haberler.png';
   } else if (source == 'Haberturk.com') {
     sourceIcon = 'assets/newsSourceImages/haberturk.png';
   } else if (source == 'Halktv.com.tr') {
@@ -56,6 +70,8 @@ getSourceImage(source, height, width) {
     sourceIcon = 'assets/newsSourceImages/karar.png';
   } else if (source == 'Kriptokoin.com') {
     sourceIcon = 'assets/newsSourceImages/kriptokoin.jpg';
+  } else if (source == 'Medyatava.com') {
+    sourceIcon = 'assets/newsSourceImages/medyatava.png';
   } else if (source == 'Milliyet.com.tr') {
     sourceIcon = 'assets/newsSourceImages/milliyet.png';
   } else if (source == 'Motorsport.com') {
@@ -92,6 +108,8 @@ getSourceImage(source, height, width) {
     sourceIcon = 'assets/newsSourceImages/teknolojioku.png';
   } else if (source == 'Tgrthaber.com.tr') {
     sourceIcon = 'assets/newsSourceImages/tgrthaber.png';
+  } else if (source == 'Tv100.com') {
+    sourceIcon = 'assets/newsSourceImages/tv100.png';
   } else if (source == 'Gazetevatan.com') {
     sourceIcon = 'assets/newsSourceImages/vatan.png';
   } else if (source == 'Webtekno.com') {

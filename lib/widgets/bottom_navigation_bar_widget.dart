@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomNavigationBar extends StatefulWidget {
+class BottomNavigationBarWidget extends StatefulWidget {
   final int selectedIndex;
-  const CustomBottomNavigationBar(this.selectedIndex, {super.key});
+  const BottomNavigationBarWidget(this.selectedIndex, {super.key});
 
   @override
-  State<CustomBottomNavigationBar> createState() =>
-      _CustomBottomNavigationBarState();
+  State<BottomNavigationBarWidget> createState() =>
+      _BottomNavigationBarWidgetState();
 }
 
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   @override
   void initState() {
     super.initState();
@@ -21,8 +21,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     } else if (index == 1) {
       Navigator.pushReplacementNamed(context, '/exchangeRates');
     } else if (index == 2) {
-      Navigator.pushReplacementNamed(context, '/prayerTimes');
-    } else if (index == 3) {
       Navigator.pushReplacementNamed(context, '/settings');
     }
   }
@@ -38,7 +36,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
           BottomNavigationBarItem(
               icon: Icon(Icons.currency_exchange), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.access_time), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
         ],
         showSelectedLabels: false,
