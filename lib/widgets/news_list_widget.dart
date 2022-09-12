@@ -23,7 +23,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                 builder: (context) => NewsDetailScreen(widget.news))),
       },
       child: Container(
-        padding: const EdgeInsets.only(bottom: 10.0),
+        padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
         decoration: const BoxDecoration(
             border: Border(
                 bottom: BorderSide(color: Color(0xff777777), width: 0.9))),

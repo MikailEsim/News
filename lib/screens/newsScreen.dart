@@ -66,7 +66,7 @@ class _NewsScreenState extends State<NewsScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: closeWeather ? 34 : 60,
+                  height: closeWeather ? 35 : 60,
                   child: Row(
                     children: [
                       Expanded(

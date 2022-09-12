@@ -67,6 +67,8 @@ class _PrayerTimesWidgetState extends State<PrayerTimesWidget> {
           endDate = DateFormat("HH:mm:ss", localeProvider.locale.toString())
               .parse(
                   dateFormat2.format(DateFormat("HH:mm").parse(time['saat']))),
+          if (endDate.difference(startDate).inMilliseconds < 0)
+            {endDate = endDate.add(const Duration(milliseconds: 86400000))},
           if (endDate.difference(startDate).inMilliseconds > 0 &&
               !getNextPrayerTimeTemp.isNotEmpty)
             {getNextPrayerTimeTemp.add(endDate.difference(startDate))},
@@ -107,10 +109,10 @@ class _PrayerTimesWidgetState extends State<PrayerTimesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (prayerTimes?.length > (0)) {
+    if (prayerTimes?.length > 0) {
       getCurrentTime(context);
     }
-    return prayerTimes.length > 0
+    return prayerTimes?.length > 0
         ? Padding(
             padding: const EdgeInsets.only(bottom: 5.0),
             child: Row(
