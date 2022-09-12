@@ -7,7 +7,9 @@ import '../utils/constant.dart';
 dynamic getNews(String category) async {
   final url = '$newsApiUrl$category';
 
+  EasyLoading.show(status: 'loading'.tr());
   var response = await http.get(Uri.parse(url));
+  EasyLoading.dismiss();
   if (response.statusCode == 200) {
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;

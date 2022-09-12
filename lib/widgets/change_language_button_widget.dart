@@ -25,7 +25,11 @@ class _ChangeLanguageButtonWidgetState
   getLang() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      langIsTr = prefs.getBool("langIsTr") == true ? true : false;
+      langIsTr = prefs.getBool("langIsTr") == null
+          ? true
+          : prefs.getBool("langIsTr") == true
+              ? true
+              : false;
     });
   }
 
@@ -40,7 +44,11 @@ class _ChangeLanguageButtonWidgetState
               IconButton(
                 icon: Flag.fromCode(FlagsCode.TR),
                 onPressed: () {
-                  localeProvider.setLocale(const Locale('tr', 'TR'), context);
+                  if (langIsTr) {
+                    localeProvider.setLocale(const Locale('en', 'EN'), context);
+                  } else {
+                    localeProvider.setLocale(const Locale('tr', 'TR'), context);
+                  }
                   getLang();
                 },
               )
@@ -71,7 +79,11 @@ class _ChangeLanguageButtonWidgetState
               IconButton(
                 icon: Flag.fromCode(FlagsCode.GB),
                 onPressed: () {
-                  localeProvider.setLocale(const Locale('en', 'EN'), context);
+                  if (langIsTr) {
+                    localeProvider.setLocale(const Locale('en', 'EN'), context);
+                  } else {
+                    localeProvider.setLocale(const Locale('tr', 'TR'), context);
+                  }
                   getLang();
                 },
               )

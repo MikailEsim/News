@@ -10,10 +10,12 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.headline6,
-      ).tr(),
+      title: Padding(
+        padding: const EdgeInsets.only(top: 15.0),
+        child: Text(
+          title,
+        ).tr(),
+      ),
       centerTitle: true,
     );
   }

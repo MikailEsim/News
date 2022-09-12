@@ -32,9 +32,17 @@ class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
     return Row(
       children: [
         Expanded(
-          child: Column(children: const [
-            Icon(
-              Icons.light_mode,
+          child: Column(children: [
+            GestureDetector(
+              onTap: () {
+                final provider =
+                    Provider.of<GeneralProvider>(context, listen: false);
+                provider.toggleTheme(false);
+                getIsDarkMode();
+              },
+              child: const Icon(
+                Icons.light_mode,
+              ),
             )
           ]),
         ),
@@ -53,9 +61,17 @@ class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
           ),
         ),
         Expanded(
-          child: Column(children: const [
-            Icon(
-              Icons.dark_mode,
+          child: Column(children: [
+            GestureDetector(
+              onTap: () {
+                final provider =
+                    Provider.of<GeneralProvider>(context, listen: false);
+                provider.toggleTheme(false);
+                getIsDarkMode();
+              },
+              child: const Icon(
+                Icons.dark_mode,
+              ),
             )
           ]),
         ),

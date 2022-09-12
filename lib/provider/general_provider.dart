@@ -48,7 +48,8 @@ class MyThemes {
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff010203),
       titleTextStyle: TextStyle(
-        fontSize: 20.0,
+        fontSize: 25.0,
+        fontWeight: FontWeight.bold,
         color: Color(0xfff5f5f5),
       ),
       elevation: 0,
@@ -83,7 +84,8 @@ class MyThemes {
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xfff5f5f5),
       titleTextStyle: TextStyle(
-        fontSize: 20.0,
+        fontSize: 25.0,
+        fontWeight: FontWeight.bold,
         color: Color(0xff010203),
       ),
       elevation: 0,
